@@ -1,0 +1,251 @@
+Table 1 - Restaurant
+parent key - Restaurant_ID
+Restaurant_Name
+Restaurant_Type
+Restaurant_Location
+Restaurant_Address
+Restaurant_City_ID
+Restaurant_StateProv
+Restaurant_PhoneNo
+Restaurant_Email
+Restaurant_Country
+Restaurant_PostalCode
+Restaurant_Owner
+Restaurant_Website
+Restaurant_Rating
+Chain_Code
+
+Table 2 - Customer
+parent key - Customer_ID
+Foreign Key - Restaurant_ID
+Customer_Title
+Customer_FirstName
+Customer_MiddleName
+Customer_LastName
+Customer_Age
+Customer_Gender
+Customer_Contact_Type
+Customer_country_code
+Customer_PhoneNo
+Customer_Email
+Customer_Email_type
+Customer_DOB
+Customer_Nationality
+Customer_Location
+Customer_Address_Type
+Customer_Address_Line1
+Customer_Address_Line2
+Customer_Address_Line3
+Customer_City_name
+Customer_State_Prov
+Customer_Postal_Code
+Customer_Latitude
+Customer_Longitude
+Secondary_Country_Name
+Secondary_Country_Code
+Secondary_Contact_Type
+Secondary_Phone_Number
+Secondary_Email_Type
+Secondary_Email
+Secondary_Address_Type
+Secondary_Address_Line1
+Secondary_Address_Line2
+Secondary_Address_Line3
+Secondary_City_Name
+Secondary_State_Prov
+Secondary_Postal_Code
+Secondary_Latitude
+Secondary_Longitude
+Customer_Occipation
+Customer_Maritial_Status
+Customer_Perferred_Language
+Primary_Credit_Card
+Primary_Credit_Card_Expiry_Month
+Primary_Credit_Card_Expiry_Year
+Secondary_Credit_Card
+Secondary_Credit_Card_Expiry_Month
+Secondary_Credit_Card_Expiry_Year
+Customer_Anniversary
+Customer_Registration_Date
+Customer_IncomeLevel
+Customer_Allergies
+Government_Identity_Proof
+Government_Identity_Number
+Government_Identity_Expiry_Date
+Special_Event
+Special_Event_Date
+Last_Purchase_Date
+Last_Purchase_Time
+LoyaltyPoints_MemberStatus[regular, silver, gold, platinum, diamond]
+Customer_Segment[Loyal, non-loyal]
+Customer_Lead_Source[Cold call, other, website, referral]
+Survey_date
+Survey_Time
+Survey_Question
+Survey_Answer
+Survey_Recommendation
+Survey_Rating
+
+Table 3 - Menu
+parent key - Menu_Item_UID
+Menu_Item_Name
+Mene_Item_Category
+Menu_VeganFriendly
+Menu_Item_Description
+Menu_Item_Price
+Menu_Item_Ingredients
+Menu_Item_Cost_Price(making price)
+
+Table 4 - Kitchen
+Parent key - Inventory_ID
+Parent key - Ingredient_ID
+IngredientName
+Ingredient_Category
+Ingredient_Location
+Ingredient_Purchase_Date
+Ingredient_Cost
+IngredientSupplier_ID
+Ingredient_Quantity_Instock
+Ingredient_Expiration_Date
+Unit_of_Measurement_of_Ingredient
+Last_Restocked_Date
+Supplier_ID
+Supplier_Name
+Supplier_Contact
+Supplier_Address
+Shipping_ID
+Supplier_Payment_ID
+Payment_Date
+Payment_Time
+Payment_Amount
+Payment_Method
+Amount_Paid
+
+Table 5 - Staff
+Parent key - Staff_ID
+foreign key - Restaurant_ID
+Staff_Role
+Staff_FirstName
+Staff_MiddleName
+Staff_LastName
+Staff_Position
+Staff_Title
+Staff_Email
+Staff_Phone_Number
+Staff_DateofBirth
+Staff_Address
+Hire_Date
+Staff_Salary
+Working_Month
+Shift_StartTime
+Shift_EndTime
+Hour_Worked
+Hourly_Wage
+Overtime_Hours
+Monthly_Salary
+Tips_Received
+
+Table 6 - Order
+Parent key - Order_ID
+parent key - Customer_Table_Number
+Foreing key - Restaurant_ID
+Foreing key - Customer_ID
+Guest_Type[Co-operate/Individual]
+No_of_Guest
+Order_Type
+Order_Time
+Order_Date
+Order_Modifier
+Order_Category
+Order_Quantity[appetizer,
+Total_No_Order
+Serve_Start_Time
+Server_End_TIme
+Foreing key - Menu_item_ID
+Foreing key - Menu_item_Name
+Foreing key - Menu_Item_Price
+Item_Quantity
+Modifier_Name
+Modifer_Price
+Order_Status
+Reservation_Date
+Reservation_Time
+Reservation_Special_Requests
+Reservation_Status
+Feedback_ID
+Feedback_Text
+Food_Rating
+Feedback_Date
+Feedback_Time
+Customer_Entry_Time
+Customer_Exist_Time
+Payment_Date= Order_Date
+Payment_time
+Promotion_Type
+Tips
+Tax
+Total_Amount
+Discount
+Amount_Paid
+Payment_Method
+Bill_ID
+Bill_Date
+Payment_status
+LoyaltyPoints_Earned
+
+Table 7 - Return 
+parent key  - Return_ID
+Return_Date(Payment_Date from order table )
+Return_Time(Payment_Time from order table + 20 minutes))
+parent key  - Refund_ID
+Foreign key - Order ID(from order table)
+Foreign key - Customer ID(from order table)
+Foreign key - Menu_item_UID(from order table)
+Foreign key - Menu_item_Name(from order table)
+Refund_Amount(Amount_Paid from Order Table)
+Refund_Date(Payment_Date from order table )
+Refund_time(Payment_Time from order table + 40 minutes)
+
+Table  8 - Finance
+Parent key - Budget_ID
+Foreign key - Resturant_ID
+Budget_Month(q1,q2,q3,q4)
+Budget_Year
+Budget_Amount
+Total_Revenue=(Amount_Paid - order_Status[return]order price)
+Tax_Amount=10% of total revenue
+Total_Sales(total sales=(order-id  - order_Status[return])from order table)
+Targeted_Sales_Amount
+
+Table 9 - Marketing
+Marketing_ID
+Campaign_Name
+Campaign_Start_Date
+Campaign_End_Date
+Campaign_Budget
+Total_Campaign_Reach
+Total_Click
+Total_Open
+Platform
+Post_ID
+Post_Date
+Post_Time
+Total_Like
+Total_Share
+Total_Comments
+Total_Views
+Follower_Growth
+Marketing_Cost
+Total_Customer_Acquired
+
+Table 10 - Expense
+Expense_ID
+Expense_Budget
+Expense_Date
+Expense_Time
+Expense_Category
+Total_Amount
+
+
+
+
