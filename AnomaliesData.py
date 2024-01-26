@@ -3,8 +3,16 @@ import random
 import datetime
 import csv
 from dateutil.relativedelta import relativedelta
+import string
 
 fake = Faker()
+
+#! Generate Invalid EmaiL Address
+def generate_invalid_email():
+    # Generate a random string of letters, numbers, and symbols
+    random_string = ''.join(random.choices(
+        string.ascii_letters + string.digits + "!@#$%^&*()_+=<>?/", k=10))
+    return f"{random_string}.com"
 
 
 class Restaurant:
@@ -14,8 +22,8 @@ class Restaurant:
     def generate_restaurants(self, num_restaurants):
         restaurant_types = ["Cafe", "Restaurant", "Fast Food", "Fine Dining"]
 
-        for _ in range(num_restaurants):
-            restaurant_id = len(self.restaurants) + 1
+        for i in range(1, num_restaurants + 1):
+            restaurant_id = i
             restaurant_name = fake.company()
             restaurant_type = random.choice(restaurant_types)
             restaurant_location = fake.city()
@@ -30,6 +38,42 @@ class Restaurant:
             restaurant_website = fake.url()
             restaurant_rating = round(random.uniform(1, 5), 1)
             chain_code = fake.uuid4()
+
+            if i % 2 == 0:
+                restaurant_id = str(random.randint(1, 5)) + "sjnfw"
+            if i % 4 == 0:
+                restaurant_name = ""  # Missing values
+            if i % 3 == 0:
+                restaurant_type = random.choice(
+                    restaurant_types) + "@@@@@"  # Invalid restaurant type
+            if i % 4 == 0:
+                # Inconsistent formatting
+                restaurant_location = f"{restaurant_location}123"
+            if i % 5 == 0:
+                restaurant_address = ""  # Missing values
+            if i % 2 == 0:
+                restaurant_city_id = str(random.randint(1, 100)) + "sjnfw"
+            if i % 3 == 0:
+                restaurant_state_prov = "@#$" + fake.state()  # Special symbols
+            if i % 4 == 0:
+                restaurant_phone = "123-456-7890-12"   # Numeric characters
+            if i % 5 == 0:
+                restaurant_email = generate_invalid_email()  # Invalid email format
+            if i % 2 == 0:
+                restaurant_country = "123" + fake.country()  # Invalid country code
+            elif i % 3 == 0:
+                restaurant_country = "Can      ada"  # Inconsistent country code
+            if i % 4 == 0:
+                restaurant_postal_code = "ABCDE"  # Invalid postal code
+            if i % 5 == 0:
+                restaurant_owner = "123"  # Numeric characters in owner's name
+            if i % 2 == 0:
+                restaurant_website = "2352352" + fake.url()  # Invalid URL
+            if i % 3 == 0:
+                restaurant_rating = round(
+                    random.uniform(-5, 5), 1)  # Negative values
+            if i % 4 == 0:
+                chain_code = "£$%" + fake.uuid4() # Invalid UUID format
 
             restaurant_data = {
                 'Restaurant_UID': restaurant_id,
@@ -54,7 +98,6 @@ class Restaurant:
         return {
             'restaurants': self.restaurants,
         }
-
 
 class Customer:
     def __init__(self):
@@ -181,6 +224,28 @@ class Customer:
                 ['Excellent', 'Good', 'Average', 'Poor'])
             customer_lead_source = random.choice(
                 ['Referral', 'Website', 'Promotional Ads'])
+
+            if i % 25 == 0:
+                customer_id = i - 1 
+            elif i % 30 == 0:
+                customer_id = i + 14212
+
+            if i % 25 == 0:
+                restaurant_id = str(random.choice(restaurants)['Restaurant_UID']) + 2323
+            elif i % 30 == 0:
+                restaurant_id = str(random.choice(restaurants)['Restaurant_UID']) + "-1"
+
+            if i % 25 == 0:
+                title = "mr23"
+            elif i % 30 == 0:
+                title = "M     r"
+            elif i % 32 == 0:
+                title = " Mrsss" 
+            elif i % 33 == 0:
+                title = "Mrs.@@@@"
+            elif i % 34 == 0:
+                title = "Ind"
+            
             customer_data = {
                 'Customer_UID': customer_id,
                 'Restaurant_UID': restaurant_id,
@@ -278,970 +343,193 @@ class Menu:
 
     def generate_menu_items(self):
         fine_dining_menu = [
-            {
-                'Menu_Item_UID': 1,
-                'Menu_Item_Name': 'Tomato Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Classic tomato soup.',
-                'Menu_Item_Type': 'Veg', 'Menu_Item_Price': 100.00,
-                'Menu_Item_Cost_Price': 50.00,
-                'Menu_Item_Ingredients': 'Tomatoes, herbs, spices'
-            },
-            {
-                'Menu_Item_UID': 2,
-                'Menu_Item_Name': 'Hot & Sour Veggie Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Spicy and tangy soup with vegetables.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 120.00,
-                'Menu_Item_Cost_Price': 60.00,
-                'Menu_Item_Ingredients': 'Vegetables, spices'
-            },
-            {
-                'Menu_Item_UID': 3,
-                'Menu_Item_Name': 'Hot & Sour Chicken Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Spicy and tangy soup with chicken.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 4,
-                'Menu_Item_Name': 'Sweet Corn Veggie Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Delicious sweet corn soup with veggies.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 110.00,
-                'Menu_Item_Cost_Price': 55.00,
-                'Menu_Item_Ingredients': 'Sweet corn, veggies, spices'
-            },
-            {
-                'Menu_Item_UID': 5,
-                'Menu_Item_Name': 'Sweet Corn Chicken Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Delicious sweet corn soup with of chicken.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 140.00,
-                'Menu_Item_Cost_Price': 88.00,
-                'Menu_Item_Ingredients': 'Sweet corn, chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 6,
-                'Menu_Item_Name': 'Lemon Coriander Veggie Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Refreshing soup with lemon, veggie and coriander flavor.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 130.00,
-                'Menu_Item_Cost_Price': 65.00,
-                'Menu_Item_Ingredients': 'Lemon, coriander, veggies, spices'
-            },
-            {
-                'Menu_Item_UID': 7,
-                'Menu_Item_Name': 'Lemon Coriander Chicken Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Refreshing soup with lemon, chicken and coriander flavor.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Lemon, coriander, chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 8,
-                'Menu_Item_Name': 'Manchow Veggie Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Spicy and flavorful Manchow soup with veggies.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 140.00,
-                'Menu_Item_Cost_Price': 70.00,
-                'Menu_Item_Ingredients': 'Vegetables, noodles, spices'
-            },
-            {
-                'Menu_Item_UID': 9,
-                'Menu_Item_Name': 'Manchow Chicken Soup',
-                'Menu_Item_Category': 'Soup',
-                'Menu_Item_Description': 'Spicy and flavorful Manchow soup with chicken.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Chicken, noodles, spices'
-            },
-            {
-                'Menu_Item_UID': 10,
-                'Menu_Item_Name': 'Cheese Corn Bites',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Crispy bites with cheese and corn.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 120.00,
-                'Menu_Item_Cost_Price': 60.00,
-                'Menu_Item_Ingredients': 'Cheese, corn, spices'
-            },
-            {
-                'Menu_Item_UID': 11,
-                'Menu_Item_Name': 'Cheese Chilli Mushroom',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy cheese and chilli coated mushrooms.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 130.00,
-                'Menu_Item_Cost_Price': 70.00,
-                'Menu_Item_Ingredients': 'Cheese, chilli, mushroom, spices'
-            },
-            {
-                'Menu_Item_UID': 12,
-                'Menu_Item_Name': 'Mushroom Salt & Pepper',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Mushrooms seasoned with salt and pepper.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 110.00,
-                'Menu_Item_Cost_Price': 55.00,
-                'Menu_Item_Ingredients': 'Mushrooms, salt, pepper, spices'
-            },
-            {
-                'Menu_Item_UID': 13,
-                'Menu_Item_Name': 'Veg Manchurian Dry',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Crispy veg balls in Manchurian sauce.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 140.00,
-                'Menu_Item_Cost_Price': 75.00,
-                'Menu_Item_Ingredients': 'Vegetables, Manchurian sauce, spices'
-            },
-            {
-                'Menu_Item_UID': 14,
-                'Menu_Item_Name': 'Veg Spring Roll',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Crispy spring rolls filled with veggies.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 120.00,
-                'Menu_Item_Cost_Price': 65.00,
-                'Menu_Item_Ingredients': 'Vegetables, spring roll sheet, spices'
-            },
-            {
-                'Menu_Item_UID': 15,
-                'Menu_Item_Name': 'Paneer Papper Chilli',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy paneer cubes with bell peppers.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 150.00,
-                'Menu_Item_Cost_Price': 80.00,
-                'Menu_Item_Ingredients': 'Paneer, bell peppers, chilli, spices'
-            },
-            {
-                'Menu_Item_UID': 16,
-                'Menu_Item_Name': 'Paneer Satay',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Grilled paneer skewers with satay sauce.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 85.00,
-                'Menu_Item_Ingredients': 'Paneer, satay sauce, spices'
-            },
-            {
-                'Menu_Item_UID': 17,
-                'Menu_Item_Name': 'Chicken Lollipop',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Crispy chicken lollipops with a flavorful coating.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 100.00,
-                'Menu_Item_Ingredients': 'Chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 18,
-                'Menu_Item_Name': 'Chilli Chicken',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy and flavorful Chilli Chicken.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 85.00,
-                'Menu_Item_Ingredients': 'Chicken, chilli, spices'
-            },
-            {
-                'Menu_Item_UID': 19,
-                'Menu_Item_Name': 'Chicken Satay',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Grilled chicken skewers with satay sauce.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Chicken, satay sauce, spices'
-            },
-            {
-                'Menu_Item_UID': 20,
-                'Menu_Item_Name': 'Buffalo Wings',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy and tangy buffalo wings.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 150.00,
-                'Menu_Item_Cost_Price': 80.00,
-                'Menu_Item_Ingredients': 'Chicken wings, buffalo sauce, spices'
-            },
-            {
-                'Menu_Item_UID': 21,
-                'Menu_Item_Name': 'Chicken China Town',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Flavorful chicken stir-fry with Chinese spices.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 190.00,
-                'Menu_Item_Cost_Price': 110.00,
-                'Menu_Item_Ingredients': 'Chicken, vegetables, Chinese spices'
-            },
-            {
-                'Menu_Item_UID': 22,
-                'Menu_Item_Name': 'Mongolian Chicken',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Stir-fried chicken with Mongolian sauce.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Chicken, Mongolian sauce, vegetables'
-            },
-            {
-                'Menu_Item_UID': 23,
-                'Menu_Item_Name': 'Fish Finger (Basa)',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Crispy fish fingers made with Basa fish.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Basa fish, breadcrumbs, spices'
-            },
-            {
-                'Menu_Item_UID': 24,
-                'Menu_Item_Name': 'Chilli Garlic Fish',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy and garlicky fish preparation.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Fish, chilli, garlic, spices'
-            },
-            {
-                'Menu_Item_UID': 25,
-                'Menu_Item_Name': 'Mutton Lime Chilli',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy and tangy mutton preparation.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 200.00,
-                'Menu_Item_Cost_Price': 120.00,
-                'Menu_Item_Ingredients': 'Mutton, lime, chilli, spices'
-            },
-            {
-                'Menu_Item_UID': 26,
-                'Menu_Item_Name': 'Butter Garlic Prawns',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Juicy prawns in a buttery garlic sauce.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 210.00,
-                'Menu_Item_Cost_Price': 130.00,
-                'Menu_Item_Ingredients': 'Prawns, butter, garlic, spices'
-            },
-            {
-                'Menu_Item_UID': 27,
-                'Menu_Item_Name': 'Prawns Chilli',
-                'Menu_Item_Category': 'Starters',
-                'Menu_Item_Description': 'Spicy chilli prawns.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 190.00,
-                'Menu_Item_Cost_Price': 110.00,
-                'Menu_Item_Ingredients': 'Prawns, chilli, spices'
-            },
-            {
-                'Menu_Item_UID': 28,
-                'Menu_Item_Name': 'Papad (Roasted/Fried)',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Roasted or fried papads for munching.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 50.00,
-                'Menu_Item_Cost_Price': 25.00,
-                'Menu_Item_Ingredients': 'Papad, oil, spices'
-            },
-            {
-                'Menu_Item_UID': 29,
-                'Menu_Item_Name': 'Masala Papad',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Crispy papad topped with masala.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 60.00,
-                'Menu_Item_Cost_Price': 30.00,
-                'Menu_Item_Ingredients': 'Papad, masala, spices'
-            },
-            {
-                'Menu_Item_UID': 30,
-                'Menu_Item_Name': 'Peanuts (Roasted/Masala)',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Roasted or masala-coated peanuts.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 40.00,
+            {'Menu_Item_UID': 1,
+                'Menu_Item_Name': 'Filet Mignon',
+                'Menu_Item_Category': 'Main Course',
+                'Menu_Item_Description': 'Tender filet grilled to perfection.',
+                'Menu_Item_Price': 45.99,
+                'Menu_Item_Ingredients': 'Beef tenderloin, seasoning',
                 'Menu_Item_Cost_Price': 20.00,
-                'Menu_Item_Ingredients': 'Peanuts, spices'
-            },
-            {
-                'Menu_Item_UID': 31,
-                'Menu_Item_Name': 'Cheese Cherry Pineapple',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Cheese cubes with cherries and pineapple.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 70.00,
-                'Menu_Item_Cost_Price': 35.00,
-                'Menu_Item_Ingredients': 'Cheese, cherries, pineapple'
-            },
-            {
-                'Menu_Item_UID': 32,
-                'Menu_Item_Name': 'French Fries',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Classic french fries.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 50.00,
-                'Menu_Item_Cost_Price': 25.00,
-                'Menu_Item_Ingredients': 'Potatoes, oil, spices'
-            },
-            {
-                'Menu_Item_UID': 33,
-                'Menu_Item_Name': 'Mexican Potato Wedges',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Spicy potato wedges with Mexican flavors.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 60.00,
-                'Menu_Item_Cost_Price': 30.00,
-                'Menu_Item_Ingredients': 'Potatoes, spices, Mexican seasoning'
-            },
-            {
-                'Menu_Item_UID': 34,
-                'Menu_Item_Name': 'Cheese Fritters',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Crispy cheese fritters.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 80.00,
-                'Menu_Item_Cost_Price': 40.00,
-                'Menu_Item_Ingredients': 'Cheese, batter, spices'
-            },
-            {
-                'Menu_Item_UID': 35,
-                'Menu_Item_Name': 'Chispy Corns',
-                'Menu_Item_Category': 'Chakna',
-                'Menu_Item_Description': 'Crispy and spicy corn kernels.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 70.00,
-                'Menu_Item_Cost_Price': 35.00,
-                'Menu_Item_Ingredients': 'Corn, batter, spices'
-            },
-            {
-                'Menu_Item_UID': 36,
-                'Menu_Item_Name': 'Garden Green Salad',
-                'Menu_Item_Category': 'Salads',
-                'Menu_Item_Description': 'Fresh garden salad with greens and veggies.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 80.00,
-                'Menu_Item_Cost_Price': 40.00,
-                'Menu_Item_Ingredients': 'Greens, veggies, dressing'
-            },
-            {
-                'Menu_Item_UID': 37,
-                'Menu_Item_Name': 'Coleslaw Salad',
-                'Menu_Item_Category': 'Salads',
-                'Menu_Item_Description': 'Crispy coleslaw salad with cabbage and carrots.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 70.00,
-                'Menu_Item_Cost_Price': 35.00,
-                'Menu_Item_Ingredients': 'Cabbage, carrots, dressing'
-            },
-            {
-                'Menu_Item_UID': 38,
-                'Menu_Item_Name': 'Caesar Salad (Veg)',
-                'Menu_Item_Category': 'Salads',
-                'Menu_Item_Description': 'Classic Caesar salad with veggies.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 90.00,
-                'Menu_Item_Cost_Price': 45.00,
-                'Menu_Item_Ingredients': 'Lettuce, croutons, Caesar dressing'
-            },
-            {
-                'Menu_Item_UID': 39,
-                'Menu_Item_Name': 'Caesar Salad (Chicken)',
-                'Menu_Item_Category': 'Salads',
-                'Menu_Item_Description': 'Classic Caesar salad with grilled chicken.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 120.00,
-                'Menu_Item_Cost_Price': 70.00,
-                'Menu_Item_Ingredients': 'Lettuce, croutons, grilled chicken, Caesar dressing'
-            },
-            {
-                'Menu_Item_UID': 40,
-                'Menu_Item_Name': 'Amritsari Paneer Bhurji',
+                'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 2,
+                'Menu_Item_Name': 'Truffle Risotto',
+                'Menu_Item_Category': 'Appetizer',
+                'Menu_Item_Description': 'Creamy risotto with black truffle shavings.',
+                'Menu_Item_Price': 32.50,
+                'Menu_Item_Ingredients': 'Arborio rice, vegetable broth, truffle, parmesan',
+                'Menu_Item_Cost_Price': 15.00,
+                'Menu_VeganFriendly': True
+             },
+            {'Menu_Item_UID': 3,
+                'Menu_Item_Name': 'Lobster Bisque',
+                'Menu_Item_Category': 'Soup',
+                'Menu_Item_Description': 'Rich and creamy soup with fresh lobster.',
+                'Menu_Item_Price': 28.75,
+                'Menu_Item_Ingredients': 'Lobster meat, cream, tomatoes, spices',
+                'Menu_Item_Cost_Price': 12.50,
+                'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 4,
+                'Menu_Item_Name': 'Creme Brulee',
+                'Menu_Item_Category': 'Dessert',
+                'Menu_Item_Description': 'Classic French dessert with a caramelized sugar crust.',
+                'Menu_Item_Price': 18.00,
+                'Menu_Item_Ingredients': 'Cream, sugar, vanilla',
+                'Menu_Item_Cost_Price': 8.50,
+                'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 5,
+                'Menu_Item_Name': 'Grilled Sea Bass',
                 'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Spicy scrambled paneer with Amritsari flavors.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 150.00,
-                'Menu_Item_Cost_Price': 80.00,
-                'Menu_Item_Ingredients': 'Paneer, spices'
-            },
-            {
-                'Menu_Item_UID': 41,
-                'Menu_Item_Name': 'Rasoi Paneer Makhani',
+                'Menu_Item_Description': 'Fresh sea bass fillet grilled with Mediterranean herbs.',
+                'Menu_Item_Price': 38.50,
+                'Menu_Item_Ingredients': 'Sea bass fillet, olive oil, lemon, herbs',
+                'Menu_Item_Cost_Price': 18.00,
+                'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 6,
+                'Menu_Item_Name': 'Caprese Salad',
+                'Menu_Item_Category': 'Appetizer',
+                'Menu_Item_Description': 'Fresh buffalo mozzarella, ripe tomatoes, basil, and balsamic glaze.',
+                'Menu_Item_Price': 22.75,
+                'Menu_Item_Ingredients': 'Buffalo mozzarella, tomatoes, basil, balsamic glaze',
+                'Menu_Item_Cost_Price': 10.00,
+                'Menu_VeganFriendly': True
+             },
+            {'Menu_Item_UID': 7,
+                'Menu_Item_Name': 'Wild Mushroom Risotto',
                 'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer in a rich and creamy tomato-based gravy.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Paneer, tomatoes, cream, spices'
-            },
-            {
-                'Menu_Item_UID': 42,
-                'Menu_Item_Name': 'Paneer Khurchan',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer cooked with bell peppers and spices.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 85.00,
-                'Menu_Item_Ingredients': 'Paneer, bell peppers, spices'
-            },
-            {
-                'Menu_Item_UID': 43,
-                'Menu_Item_Name': 'Paneer Tikka Masala',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer tikka in a flavorful masala gravy.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Paneer, tikka masala, spices'
-            },
-            {
-                'Menu_Item_UID': 44,
-                'Menu_Item_Name': 'Kadai Paneer',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer cooked in a kadai with aromatic spices.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 80.00,
-                'Menu_Item_Ingredients': 'Paneer, spices'
-            },
-            {
-                'Menu_Item_UID': 45,
-                'Menu_Item_Name': 'Paneer Angara Masala',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Spicy and smoky paneer preparation.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 170.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Paneer, spices, smoky flavor'
-            },
-            {
-                'Menu_Item_UID': 46,
-                'Menu_Item_Name': 'Palak Paneer',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer in a creamy spinach gravy.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 150.00,
-                'Menu_Item_Cost_Price': 75.00,
-                'Menu_Item_Ingredients': 'Paneer, spinach, cream, spices'
-            },
-            {
-                'Menu_Item_UID': 47,
-                'Menu_Item_Name': 'Sarson Da Daag',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Paneer in a mustard-flavored gravy.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 160.00,
-                'Menu_Item_Cost_Price': 80.00,
-                'Menu_Item_Ingredients': 'Paneer, mustard, spices'
-            },
-            {
-                'Menu_Item_UID': 48,
-                'Menu_Item_Name': 'Punjabi Chole Masala',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Spicy and tangy chickpeas curry.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 140.00,
-                'Menu_Item_Cost_Price': 70.00,
-                'Menu_Item_Ingredients': 'Chickpeas, spices'
-            },
-            {
-                'Menu_Item_UID': 49,
-                'Menu_Item_Name': 'Malai Kofta',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Vegetable dumplings in a creamy tomato-based gravy.',
-                'Menu_Item_Type': 'Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Vegetables, kofta, cream, spices'
-            },
-            {
-                'Menu_Item_UID': 50,
-                'Menu_Item_Name': 'Rasoi Murg Makhani',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Butter chicken in a rich and creamy tomato-based gravy.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 200.00,
-                'Menu_Item_Cost_Price': 120.00,
-                'Menu_Item_Ingredients': 'Chicken, tomatoes, cream, spices'
-            },
-            {
-                'Menu_Item_UID': 51,
-                'Menu_Item_Name': 'Rasoi Chicken Handi',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken cooked in a traditional handi with aromatic spices.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 190.00,
-                'Menu_Item_Cost_Price': 100.00,
-                'Menu_Item_Ingredients': 'Chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 52,
-                'Menu_Item_Name': 'Murg Matka Handi',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken curry cooked in a matka with special spices.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Chicken, spices'
-            },
-            {
-                'Menu_Item_UID': 53,
-                'Menu_Item_Name': 'Chicken Achari Kolhapuri',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken curry with achari and Kolhapuri flavors.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 210.00,
-                'Menu_Item_Cost_Price': 120.00,
-                'Menu_Item_Ingredients': 'Chicken, achari spices, Kolhapuri spices'
-            },
-            {
-                'Menu_Item_UID': 54,
-                'Menu_Item_Name': 'Murg Tikka Lababdar',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken tikka in a rich and flavorful lababdar gravy.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 220.00,
-                'Menu_Item_Cost_Price': 130.00,
-                'Menu_Item_Ingredients': 'Chicken tikka, lababdar gravy, spices'
-            },
-            {
-                'Menu_Item_UID': 55,
-                'Menu_Item_Name': 'Murg Tikka Masala',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken tikka in a spicy masala gravy.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 210.00,
-                'Menu_Item_Cost_Price': 110.00,
-                'Menu_Item_Ingredients': 'Chicken tikka, masala gravy, spices'
-            },
-            {
-                'Menu_Item_UID': 56,
-                'Menu_Item_Name': 'Murg Afghani',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Afghani-style chicken preparation.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 200.00,
-                'Menu_Item_Cost_Price': 100.00,
-                'Menu_Item_Ingredients': 'Chicken, Afghani spices'
-            },
-            {
-                'Menu_Item_UID': 57,
-                'Menu_Item_Name': 'Lahori Murg',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Chicken curry with Lahori flavors.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 190.00,
-                'Menu_Item_Cost_Price': 95.00,
-                'Menu_Item_Ingredients': 'Chicken, Lahori spices'
-            },
-            {
-                'Menu_Item_UID': 58,
-                'Menu_Item_Name': 'Chicken Keema Methi Khaas',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Minced chicken curry with fenugreek leaves.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 180.00,
-                'Menu_Item_Cost_Price': 90.00,
-                'Menu_Item_Ingredients': 'Minced chicken, fenugreek leaves, spices'
-            },
-            {
-                'Menu_Item_UID': 59,
-                'Menu_Item_Name': 'Chicken Manchurian',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Indo-Chinese style chicken Manchurian.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 190.00,
-                'Menu_Item_Cost_Price': 100.00,
-                'Menu_Item_Ingredients': 'Chicken, Manchurian sauce, spices'
-            },
-            {
-                'Menu_Item_UID': 60,
-                'Menu_Item_Name': 'Kashmiri Mutton',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Mutton curry with Kashmiri spices.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 220.00,
-                'Menu_Item_Cost_Price': 120.00,
-                'Menu_Item_Ingredients': 'Mutton, Kashmiri spices'
-            },
-            {
-                'Menu_Item_UID': 61,
-                'Menu_Item_Name': 'Laal Mutton',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Spicy red mutton curry.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 230.00,
-                'Menu_Item_Cost_Price': 130.00,
-                'Menu_Item_Ingredients': 'Mutton, spices'
-            },
-            {
-                'Menu_Item_UID': 62,
-                'Menu_Item_Name': 'Jhunga Masala',
-                'Menu_Item_Category': 'Main Course',
-                'Menu_Item_Description': 'Prawn curry with special masala.',
-                'Menu_Item_Type': 'Non-Veg',
-                'Menu_Item_Price': 240.00,
-                'Menu_Item_Cost_Price': 140.00,
-                'Menu_Item_Ingredients': 'Prawns, masala, spices'
-            },
+                'Menu_Item_Description': 'Risotto cooked with assorted wild mushrooms and parmesan.',
+                'Menu_Item_Price': 34.00,
+                'Menu_Item_Ingredients': 'Arborio rice, wild mushrooms, vegetable broth, parmesan',
+                'Menu_Item_Cost_Price': 16.00,
+                'Menu_VeganFriendly': True
+             },
+            {'Menu_Item_UID': 8,
+                'Menu_Item_Name': 'Chocolate Lava Cake',
+                'Menu_Item_Category': 'Dessert',
+                'Menu_Item_Description': 'Warm chocolate cake with a gooey molten center, served with vanilla ice cream.',
+                'Menu_Item_Price': 20.00,
+                'Menu_Item_Ingredients': 'Chocolate, flour, sugar, eggs, vanilla ice cream',
+                'Menu_Item_Cost_Price': 9.50,
+                'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 9,
+             'Menu_Item_Name': 'Seared Foie Gras',
+             'Menu_Item_Category': 'Appetizer',
+             'Menu_Item_Description': 'Pan-seared foie gras served with a fruit compote.',
+             'Menu_Item_Price': 55.00,
+             'Menu_Item_Ingredients': 'Foie gras, fruit compote, seasoning',
+             'Menu_Item_Cost_Price': 25.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 10,
+             'Menu_Item_Name': 'Chateaubriand Steak',
+             'Menu_Item_Category': 'Main Course',
+             'Menu_Item_Description': 'Center-cut tenderloin steak served with béarnaise sauce.',
+             'Menu_Item_Price': 65.00,
+             'Menu_Item_Ingredients': 'Beef tenderloin, seasoning, béarnaise sauce',
+             'Menu_Item_Cost_Price': 30.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 11,
+             'Menu_Item_Name': 'Bouillabaisse',
+             'Menu_Item_Category': 'Soup',
+             'Menu_Item_Description': 'Traditional Provencal fish stew with saffron-infused broth.',
+             'Menu_Item_Price': 42.50,
+             'Menu_Item_Ingredients': 'Assorted fish, shellfish, saffron broth, vegetables',
+             'Menu_Item_Cost_Price': 20.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 12,
+             'Menu_Item_Name': 'Tiramisu',
+             'Menu_Item_Category': 'Dessert',
+             'Menu_Item_Description': 'Italian dessert made with coffee-soaked ladyfingers and mascarpone cream.',
+             'Menu_Item_Price': 16.50,
+             'Menu_Item_Ingredients': 'Ladyfingers, coffee, mascarpone, cocoa powder',
+             'Menu_Item_Cost_Price': 7.50,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 13,
+             'Menu_Item_Name': 'Vegetable Tempura',
+             'Menu_Item_Category': 'Appetizer',
+             'Menu_Item_Description': 'Assorted seasonal vegetables deep-fried in a light tempura batter.',
+             'Menu_Item_Price': 25.00,
+             'Menu_Item_Ingredients': 'Assorted vegetables, tempura batter, dipping sauce',
+             'Menu_Item_Cost_Price': 12.00,
+             'Menu_VeganFriendly': True
+             },
+            {'Menu_Item_UID': 14,
+             'Menu_Item_Name': 'Peking Duck',
+             'Menu_Item_Category': 'Main Course',
+             'Menu_Item_Description': 'Crispy skin duck served with pancakes, cucumber, and hoisin sauce.',
+             'Menu_Item_Price': 48.00,
+             'Menu_Item_Ingredients': 'Duck, pancakes, cucumber, hoisin sauce',
+             'Menu_Item_Cost_Price': 22.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 15,
+             'Menu_Item_Name': 'Fruit Sorbet',
+             'Menu_Item_Category': 'Dessert',
+             'Menu_Item_Description': 'Refreshing sorbet made with seasonal fruits.',
+             'Menu_Item_Price': 14.00,
+             'Menu_Item_Ingredients': 'Seasonal fruits, sugar, water',
+             'Menu_Item_Cost_Price': 6.50,
+             'Menu_VeganFriendly': True
+             },
+            {'Menu_Item_UID': 16,
+             'Menu_Item_Name': 'Oysters Rockefeller',
+             'Menu_Item_Category': 'Appetizer',
+             'Menu_Item_Description': 'Oysters topped with a rich sauce and baked to perfection.',
+             'Menu_Item_Price': 38.50,
+             'Menu_Item_Ingredients': 'Oysters, sauce, breadcrumbs, parsley',
+             'Menu_Item_Cost_Price': 18.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 17,
+             'Menu_Item_Name': 'Beef Wellington',
+             'Menu_Item_Category': 'Main Course',
+             'Menu_Item_Description': 'Tender beef fillet coated with mushroom duxelles, wrapped in puff pastry.',
+             'Menu_Item_Price': 55.00,
+             'Menu_Item_Ingredients': 'Beef fillet, mushrooms, puff pastry',
+             'Menu_Item_Cost_Price': 28.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 18,
+             'Menu_Item_Name': 'French Onion Soup',
+             'Menu_Item_Category': 'Soup',
+             'Menu_Item_Description': 'Hearty soup made with caramelized onions, topped with melted cheese.',
+             'Menu_Item_Price': 24.75,
+             'Menu_Item_Ingredients': 'Onions, beef broth, bread, cheese',
+             'Menu_Item_Cost_Price': 11.50,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 19,
+             'Menu_Item_Name': 'Panna Cotta',
+             'Menu_Item_Category': 'Dessert',
+             'Menu_Item_Description': 'Creamy Italian dessert served with berry compote.',
+             'Menu_Item_Price': 19.50,
+             'Menu_Item_Ingredients': 'Cream, sugar, gelatin, berries',
+             'Menu_Item_Cost_Price': 9.00,
+             'Menu_VeganFriendly': False
+             },
+            {'Menu_Item_UID': 20,
+             'Menu_Item_Name': 'Vegetable Crudites',
+             'Menu_Item_Category': 'Appetizer',
+             'Menu_Item_Description': 'Assorted raw vegetables served with dip.',
+             'Menu_Item_Price': 18.00,
+             'Menu_Item_Ingredients': 'Assorted vegetables, dip',
+             'Menu_Item_Cost_Price': 8.50,
+             'Menu_VeganFriendly': True
+             }
         ]
+
         self.menu_items = fine_dining_menu
 
     def get_data(self):
         return {
             'menu_items': self.menu_items,
-        }
-
-
-class Drinks:
-    def __init__(self):
-        self.drink_items = []
-
-    def generate_drink_items(self):
-        drinks_menu = [
-            {
-                'Drink_Item_UID': 1,
-                'Drink_Item_Name': "Teacher's (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Teacher\'s brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 150.00,
-                'Drink_Item_Cost_Price': 80.00,
-            },
-            {
-                'Drink_Item_UID': 2,
-                'Drink_Item_Name': "Ballentine's (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Ballentine\'s brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 160.00,
-                'Drink_Item_Cost_Price': 85.00,
-            },
-            {
-                'Drink_Item_UID': 3,
-                'Drink_Item_Name': "100 Pipers (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': '100 Pipers brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 170.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-            {
-                'Drink_Item_UID': 4,
-                'Drink_Item_Name': "Black Dog (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Black Dog brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 180.00,
-                'Drink_Item_Cost_Price': 95.00,
-            },
-            {
-                'Drink_Item_UID': 5,
-                'Drink_Item_Name': "Black & White (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Black & White brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 160.00,
-                'Drink_Item_Cost_Price': 85.00,
-            },
-            {
-                'Drink_Item_UID': 6,
-                'Drink_Item_Name': "Vat 69 (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Vat 69 brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 150.00,
-                'Drink_Item_Cost_Price': 80.00,
-            },
-            {
-                'Drink_Item_UID': 7,
-                'Drink_Item_Name': "Teacher's Highland Cream (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Teacher\'s Highland Cream brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 190.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 8,
-                'Drink_Item_Name': "Blenders Pride Reserve (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Blenders Pride Reserve brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 200.00,
-                'Drink_Item_Cost_Price': 110.00,
-            },
-            {
-                'Drink_Item_UID': 9,
-                'Drink_Item_Name': "Antiquity Blue (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Antiquity Blue brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 180.00,
-                'Drink_Item_Cost_Price': 95.00,
-            },
-            {
-                'Drink_Item_UID': 10,
-                'Drink_Item_Name': "Blenders Pride (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Blenders Pride brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 170.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-            {
-                'Drink_Item_UID': 11,
-                'Drink_Item_Name': "Royal Stag (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Royal Stag brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 160.00,
-                'Drink_Item_Cost_Price': 85.00,
-            },
-            {
-                'Drink_Item_UID': 12,
-                'Drink_Item_Name': "Oaksmith Silver (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Oaksmith Silver brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 180.00,
-                'Drink_Item_Cost_Price': 95.00,
-            },
-            {
-                'Drink_Item_UID': 13,
-                'Drink_Item_Name': "Oaksmith Gold (60ml)",
-                'Drink_Item_Category': 'Domestic Whisky',
-                'Drink_Item_Description': 'Oaksmith Gold brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 190.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 14,
-                'Drink_Item_Name': 'Chivas Regal (60ml)',
-                'Drink_Item_Category': 'Blended Scotch Whisky',
-                'Drink_Item_Description': 'Chivas Regal brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 250.00,
-                'Drink_Item_Cost_Price': 120.00,
-            },
-            {
-                'Drink_Item_UID': 15,
-                'Drink_Item_Name': 'J.W. Black Label (60ml)',
-                'Drink_Item_Category': 'Blended Scotch Whisky',
-                'Drink_Item_Description': 'Johnnie Walker Black Label brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 260.00,
-                'Drink_Item_Cost_Price': 130.00,
-            },
-            {
-                'Drink_Item_UID': 16,
-                'Drink_Item_Name': 'J.W. Red Label (60ml)',
-                'Drink_Item_Category': 'Blended Scotch Whisky',
-                'Drink_Item_Description': 'Johnnie Walker Red Label brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 240.00,
-                'Drink_Item_Cost_Price': 110.00,
-            },
-            {
-                'Drink_Item_UID': 17,
-                'Drink_Item_Name': 'Jameson (60ml)',
-                'Drink_Item_Category': 'Blended Scotch Whisky',
-                'Drink_Item_Description': 'Jameson brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 230.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 18,
-                'Drink_Item_Name': 'Glenfiddich 12 Years (60ml)',
-                'Drink_Item_Category': 'Single Malt Whisky',
-                'Drink_Item_Description': 'Glenfiddich 12 Years brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 280.00,
-                'Drink_Item_Cost_Price': 150.00,
-            },
-            {
-                'Drink_Item_UID': 19,
-                'Drink_Item_Name': 'Glenlivet (60ml)',
-                'Drink_Item_Category': 'Single Malt Whisky',
-                'Drink_Item_Description': 'Glenlivet brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 270.00,
-                'Drink_Item_Cost_Price': 140.00,
-            },
-            {
-                'Drink_Item_UID': 20,
-                'Drink_Item_Name': 'Glenmorangie (60ml)',
-                'Drink_Item_Category': 'Single Malt Whisky',
-                'Drink_Item_Description': 'Glenmorangie brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 290.00,
-                'Drink_Item_Cost_Price': 160.00,
-            },
-            {
-                'Drink_Item_UID': 21,
-                'Drink_Item_Name': 'Jack Daniel (60ml)',
-                'Drink_Item_Category': 'Tennessee & Bourbon Whisky',
-                'Drink_Item_Description': 'Jack Daniel brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 220.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 22,
-                'Drink_Item_Name': 'Jim Beam (60ml)',
-                'Drink_Item_Category': 'Tennessee & Bourbon Whisky',
-                'Drink_Item_Description': 'Jim Beam brand whisky.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 210.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-            {
-                'Drink_Item_UID': 23,
-                'Drink_Item_Name': 'Bacardi Superior (60ml)',
-                'Drink_Item_Category': 'Rum',
-                'Drink_Item_Description': 'Bacardi Superior brand rum.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 180.00,
-                'Drink_Item_Cost_Price': 95.00,
-            },
-            {
-                'Drink_Item_UID': 24,
-                'Drink_Item_Name': 'Bacardi Flavours (60ml)',
-                'Drink_Item_Category': 'Rum',
-                'Drink_Item_Description': 'Bacardi Flavours brand rum.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 190.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 25,
-                'Drink_Item_Name': 'Old Monk (60ml)',
-                'Drink_Item_Category': 'Rum',
-                'Drink_Item_Description': 'Old Monk brand rum.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 170.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-            {
-                'Drink_Item_UID': 26,
-                'Drink_Item_Name': 'Silver Tequila (60ml)',
-                'Drink_Item_Category': 'Tequila',
-                'Drink_Item_Description': 'Silver Tequila.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 200.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 27,
-                'Drink_Item_Name': 'Absolut (60ml)',
-                'Drink_Item_Category': 'Vodka',
-                'Drink_Item_Description': 'Absolut brand vodka.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 180.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-            {
-                'Drink_Item_UID': 28,
-                'Drink_Item_Name': 'Smirnoff/Flavours (60ml)',
-                'Drink_Item_Category': 'Vodka',
-                'Drink_Item_Description': 'Smirnoff/Flavours brand vodka.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 170.00,
-                'Drink_Item_Cost_Price': 85.00,
-            },
-            {
-                'Drink_Item_UID': 29,
-                'Drink_Item_Name': 'Magic Moment Verve (60ml)',
-                'Drink_Item_Category': 'Vodka',
-                'Drink_Item_Description': 'Magic Moment Verve brand vodka.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 190.00,
-                'Drink_Item_Cost_Price': 95.00,
-            },
-            {
-                'Drink_Item_UID': 30,
-                'Drink_Item_Name': 'Blue Riband (60ml)',
-                'Drink_Item_Category': 'Gin',
-                'Drink_Item_Description': 'Blue Riband brand gin.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 160.00,
-                'Drink_Item_Cost_Price': 80.00,
-            },
-            {
-                'Drink_Item_UID': 31,
-                'Drink_Item_Name': 'Bombay Sapphire (60ml)',
-                'Drink_Item_Category': 'Gin',
-                'Drink_Item_Description': 'Bombay Sapphire brand gin.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 170.00,
-                'Drink_Item_Cost_Price': 85.00,
-            },
-            {
-                'Drink_Item_UID': 32,
-                'Drink_Item_Name': 'Honey Bee (60ml)',
-                'Drink_Item_Category': 'Brandy',
-                'Drink_Item_Description': 'Honey Bee brand brandy.',
-                'Drink_Item_Volume': '60ml',
-                'Drink_Item_Price': 160.00,
-                'Drink_Item_Cost_Price': 80.00,
-            },
-            {
-                'Drink_Item_UID': 33,
-                'Drink_Item_Name': 'Corona Extra (650ml)',
-                'Drink_Item_Category': 'Beer',
-                'Drink_Item_Description': 'Corona Extra brand beer.',
-                'Drink_Item_Volume': '650ml',
-                'Drink_Item_Price': 250.00,
-                'Drink_Item_Cost_Price': 120.00,
-            },
-            {
-                'Drink_Item_UID': 34,
-                'Drink_Item_Name': 'Heineken (650ml)',
-                'Drink_Item_Category': 'Beer',
-                'Drink_Item_Description': 'Heineken brand beer.',
-                'Drink_Item_Volume': '650ml',
-                'Drink_Item_Price': 240.00,
-                'Drink_Item_Cost_Price': 110.00,
-            },
-            {
-                'Drink_Item_UID': 35,
-                'Drink_Item_Name': 'Bira Blonde (650ml)',
-                'Drink_Item_Category': 'Beer',
-                'Drink_Item_Description': 'Bira Blonde brand beer.',
-                'Drink_Item_Volume': '650ml',
-                'Drink_Item_Price': 230.00,
-                'Drink_Item_Cost_Price': 100.00,
-            },
-            {
-                'Drink_Item_UID': 36,
-                'Drink_Item_Name': 'Bira White (650ml)',
-                'Drink_Item_Category': 'Beer',
-                'Drink_Item_Description': 'Bira White brand beer.',
-                'Drink_Item_Volume': '650ml',
-                'Drink_Item_Price': 220.00,
-                'Drink_Item_Cost_Price': 90.00,
-            },
-        ]
-        self.drink_items = drinks_menu
-
-    def get_data(self):
-        return {
-            'drink_items': self.drink_items,
         }
 
 
@@ -1949,7 +1237,7 @@ write_to_csv(restaurant_data, '1. Restaurants.csv')
 
 #! Usage example:
 customer = Customer()
-customer_data = list(customer.generate_customers(400, restaurant_data))
+customer_data = list(customer.generate_customers(200, restaurant_data))
 
 # * Write Customer data to CSV
 write_to_csv(customer_data, '2. Customers.csv')
@@ -1963,11 +1251,6 @@ menu.generate_menu_items()
 fine_dining_menu_data = menu.get_data()['menu_items']
 write_to_csv(fine_dining_menu_data, '3. Menu.csv')
 
-#! Usage example:
-drinks_menu = Drinks()
-drinks_menu.generate_drink_items()
-drinks_data = drinks_menu.get_data()['drink_items']
-write_to_csv(drinks_data, '4. Drinks.csv')
 
 #! Usage example:
 kitchen = Kitchen()
@@ -1975,7 +1258,7 @@ kitchen.generate_inventory(100)
 inventory_data = kitchen.get_data()
 
 # * Write Inventory data to CSV
-write_to_csv(inventory_data, '5. Kitchen.csv')
+write_to_csv(inventory_data, '4. Kitchen.csv')
 
 
 #! Usage example:
@@ -1984,17 +1267,17 @@ staff_table.generate_staff_data(50, restaurant_data)
 staff_data = staff_table.get_data()
 
 # * Write Staff data to CSV
-write_to_csv(staff_data, '6. Staff.csv')
+write_to_csv(staff_data, '5. Staff.csv')
 
 
 #! Usage example:
 order_table = Order()
 order_table.generate_orders(
-    1000000, restaurant_data, customer_data, fine_dining_menu_data)
+    700, restaurant_data, customer_data, fine_dining_menu_data)
 order_data = order_table.get_data()
 
 # * Write Order data to CSV
-write_to_csv(order_data, '7. Orders.csv')
+write_to_csv(order_data, '6. Orders.csv')
 
 
 #! Usage example:
@@ -2003,14 +1286,14 @@ return_table.generate_returns(order_data)
 return_data = return_table.get_data()
 
 # * Write Return data to CSV
-write_to_csv(return_data, '8. Return.csv')
+write_to_csv(return_data, '7. Return.csv')
 
 #! Generate Financial Data
 finance = Finance()
 finance.generate_financial_data(restaurant_data, order_data)
 finance_data = finance.get_data()
 # * Write Finance data to CSV
-write_to_csv(finance_data, '9. Finance.csv')
+write_to_csv(finance_data, '8. Finance.csv')
 
 
 # Generate Marketing Data
@@ -2018,10 +1301,10 @@ marketing = Marketing()
 marketing.generate_marketing_data(restaurant_data)
 marketing_data = marketing.get_data()
 # Write Marketing data to CSV
-write_to_csv(marketing_data, '10. Marketing.csv')
+write_to_csv(marketing_data, '9. Marketing.csv')
 
 # Generate Expense Data
 expense = Expense()
 expense.generate_expense_data(restaurant_data, staff_data)
 data = expense.get_data()
-write_to_csv(data, '11. Expense.csv')
+write_to_csv(data, '10. Expense.csv')
