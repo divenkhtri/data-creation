@@ -68,6 +68,8 @@ class Customer:
         for _ in range(num_customers):
             customer_id = self.starting_customer_id
             self.starting_customer_id += 1
+            while customer_id in self.customers:
+                customer_id = len(self.customers) + 1
 
             restaurant = random.choice(restaurants)
             restaurant_name = restaurant['Restaurant_Name']
@@ -1402,6 +1404,7 @@ class Staff:
 class Order:
     def __init__(self):
         self.orders = []
+        self.starting_order_id = 1001
 
     def generate_orders(self, num_orders, restaurants, customers, menu_items):
         guest_types = ['Co-operate', 'Individual']
@@ -1477,11 +1480,8 @@ class Order:
         # Generate dates from January 1, 2023, to the current date
         start_date = datetime.date(2023, 1, 1)
         end_date = datetime.date.today()
-        self.starting_order_id = 1001
-
         for _ in range(num_orders):
-            order_id = self.starting_order_id
-            self.starting_order_id += 1
+            order_id = len(self.orders) + 1
             restaurant_id = random.choice(restaurants)['Restaurant_UID']
             customer_id = random.choice(customers)['Customer_UID']
 
@@ -1665,12 +1665,11 @@ class Order:
 class Return:
     def __init__(self):
         self.returns = []
-        self.starting_return_id = 39
-        self.starting_refund_id = 39
+        self.starting_return_id = 42
+        self.starting_refund_id = 42
     def generate_returns(self, orders):
         return_id = self.starting_return_id
         refund_id = self.starting_refund_id
-
 
         for order in orders:
             return_date = None
